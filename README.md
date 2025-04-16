@@ -84,16 +84,6 @@ Después de ejecutar el script, tendrás:
 - Un pipeline YAML listo para CI/CD
 - Todo ello ya *pusheado* y listo para trabajar 💼
 
-## 📝 Ejemplo de uso completo
-
-```powershell
-./bootstrap.ps1 -Organization "https://dev.azure.com/miempresa" `
-                -ProjectName "InventarioAPI" `
-                -RepositoryName "inventario" `
-                -PersonalAccessToken "xyz1234abcTOKEN" `
-                -Visibility "private"
-```
-
 ## 🛟 Soporte
 
 Este script está pensado como un punto de partida. Si necesitas soporte para configuraciones más avanzadas (múltiples repos, plantillas de pipelines, etc.), siéntete libre de abrir un *issue* o hacer un *fork*.
