@@ -1,4 +1,4 @@
-# 🚀 Azure DevOps Project Bootstrapper
+# 🚀 Automatización de Migración de TFS a Git para Proyectos de Azure DevOps
 
 Este repositorio contiene un script de automatización en PowerShell para crear y configurar proyectos en **Azure DevOps** desde cero. Ideal para equipos que quieran estandarizar y acelerar el proceso de creación de nuevos repos.
 
