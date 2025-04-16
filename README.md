@@ -74,8 +74,6 @@ Si ya has configurado los valores por defecto dentro del script, simplemente eje
     -SonarUrl "https://sonarqube.miempresa.com"
 ```
 
-#### Parámetros disponibles
-
 | Parámetro              | Descripción                                                                    |
 |------------------------|--------------------------------------------------------------------------------|
 | `-ProjectName`         | Nombre del nuevo proyecto en Azure DevOps                                      |
