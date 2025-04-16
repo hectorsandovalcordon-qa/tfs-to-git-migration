@@ -1,34 +1,28 @@
- === CONFIGURACIÓN GENERAL ===
-$projectName        = "MyProject"                      # Nombre del proyecto (usado en Azure DevOps y SonarQube)
-$sourceRepoName     = "MyProject.Web.OLD"              # Nombre del repositorio actual en TFS
-$solutionFile       = "MySolution.sln"                 # Archivo .sln que usará el pipeline
-$newRepoName        = "$projectName.Web"               # Nombre del nuevo repositorio
-$pipelineName       = "$newRepoName-CI"                # Nombre del pipeline
+param (
+    [string]$projectName        = "MyProject",
+    [string]$sourceRepoName     = "MyProject.Web.OLD",
+    [string]$solutionFile       = "MySolution.sln",
+    [string]$newRepoName        = "$($projectName).Web",
+    [string]$pipelineName       = "$($projectName).Web-CI",
+    [string]$localRepoPath      = "C:\Projects\$projectName",
+    [string]$templateFilesPath  = "C:\Templates\BaseFiles",
+    [string]$repoFilesPath      = "C:\Projects\$projectName\$($projectName).Web",
+    [string]$organizationUrl    = "https://dev.azure.com/my-org",
 
-# === RUTAS LOCALES ===
-$localRepoPath      = "C:\Projects\$projectName"       # Ruta local de trabajo
-$templateFilesPath  = "C:\Templates\BaseFiles"         # Ruta a plantillas: .gitignore, Nuget.Config, etc.
-$repoFilesPath      = "C:\Projects\$projectName\$newRepoName"  # Ruta a los archivos del repo antes del push
+    [string]$branchDev          = "dev",
+    [string]$branchPre          = "pre",
+    [string]$branchMain         = "main",
+    [string]$branchMaster       = "refs/heads/master",
 
-# === AZURE DEVOPS ===
-$organizationUrl    = "https://dev.azure.com/my-org"   # URL de tu organización en Azure DevOps
+    [string]$artifactVariable   = '$(Build.DefinitionName)_$(Build.BuildNumber)',
+    [string]$envVarUsername     = '$(Deploy_Username)',
+    [string]$envVarPassword     = '$(Deploy_Password)',
 
-# === RAMAS ===
-$branchDev          = "dev"
-$branchPre          = "pre"
-$branchMain         = "main"
-$branchMaster       = "refs/heads/master"
+    [string]$SonarToken         = "squ_xxxxx",
+    [string]$SonarUrl           = "https://sonarqube.miempresa.com"
+)
 
-# === VARIABLES DE COMPILACIÓN ===
-$artifactVariable   = '$(Build.DefinitionName)_$(Build.BuildNumber)'
-$envVarUsername     = '$(Deploy_Username)'
-$envVarPassword     = '$(Deploy_Password)'
-
-# === SONARQUBE ===
-$SonarToken         = "squ_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # Token personal de SonarQube (tipo Bearer)
-$SonarUrl           = "https://sonarqube.miempresa.com"    # URL del servidor SonarQube
-
-# --- DESCARGA DEL REPOSITORIO DESDE TFS (si es necesario) ---
+# --- DESCARGA DEL REPOSITORIO DESDE TFS (si aplica) ---
 $tfPath = "C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\TF.exe"
 & $tfPath workfold $/SOURCE $localRepoPath
 tf get "$/SOURCE/$projectName/$sourceRepoName" /recursive
@@ -59,7 +53,6 @@ foreach ($branch in @($branchDev, $branchPre, $branchMain)) {
     az repos ref create --name "refs/heads/$branch" --object-id $objectId --org $organizationUrl --project $projectName --repository $newRepoName
 }
 
-# Eliminar master y repositorio por defecto
 az repos ref delete --name $branchMaster --object-id $objectId --org $organizationUrl --project $projectName --repository $newRepoName
 $defaultRepo = (az repos list --org $organizationUrl --project $projectName | ConvertFrom-Json) | Where-Object { $_.name -eq $projectName }
 az repos delete --id $defaultRepo.Id --org $organizationUrl --project $projectName
@@ -110,12 +103,10 @@ az pipelines variable-group variable create --group-id $varGroup.Id --name "Depl
 # --- CREACIÓN DE PROYECTOS EN SONARQUBE ---
 Write-Host "`n==> Creando proyectos en SonarQube para $ProjectName..."
 
-# Autenticación
 $sonarHeader = @{ Authorization = "Bearer $SonarToken" }
 $createProjectEndpoint = "$SonarUrl/api/projects/create"
 $visibility = "private"
 
-# Nombres de los proyectos por entorno
 $sonarProjects = @(
     @{ Suffix = "PRO"; Branch = "PRO" },
     @{ Suffix = "PRE"; Branch = "PRE" },
@@ -124,7 +115,6 @@ $sonarProjects = @(
 
 foreach ($proj in $sonarProjects) {
     $projectKey = "$ProjectName.$($proj.Suffix)"
-
     $body = @{
         name       = $projectKey
         project    = $projectKey
