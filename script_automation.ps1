@@ -1,42 +1,32 @@
-# script_automation.ps1
+ === CONFIGURACIÓN GENERAL ===
+$projectName        = "MyProject"                      # Nombre del proyecto (usado en Azure DevOps y SonarQube)
+$sourceRepoName     = "MyProject.Web.OLD"              # Nombre del repositorio actual en TFS
+$solutionFile       = "MySolution.sln"                 # Archivo .sln que usará el pipeline
+$newRepoName        = "$projectName.Web"               # Nombre del nuevo repositorio
+$pipelineName       = "$newRepoName-CI"                # Nombre del pipeline
 
-# --- CONFIGURACIÓN DE VARIABLES (defínelas antes de ejecutar el script) ---
+# === RUTAS LOCALES ===
+$localRepoPath      = "C:\Projects\$projectName"       # Ruta local de trabajo
+$templateFilesPath  = "C:\Templates\BaseFiles"         # Ruta a plantillas: .gitignore, Nuget.Config, etc.
+$repoFilesPath      = "C:\Projects\$projectName\$newRepoName"  # Ruta a los archivos del repo antes del push
 
-# Nombre del proyecto
-$projectName        = "MyProject"
+# === AZURE DEVOPS ===
+$organizationUrl    = "https://dev.azure.com/my-org"   # URL de tu organización en Azure DevOps
 
-# Nombre del repositorio fuente y solución
-$sourceRepoName     = "MyProject.Web.OLD"
-$solutionFile       = "MySolution.sln"
-
-# Nuevo nombre del repositorio
-$newRepoName        = "$projectName.Web"
-
-# Nombre del pipeline
-$pipelineName       = "$newRepoName-CI"
-
-# Ruta local donde se almacenará el repositorio
-$localRepoPath      = "C:\Projects\$projectName\"
-
-# Ruta a los archivos de plantilla (para `.gitignore`, `NuGet.Config`, etc.)
-$templateFilesPath  = "C:\Path\To\Template\Files"
-
-# Ruta donde se encuentran los archivos del repositorio
-$repoFilesPath      = "C:\Path\To\Repository\Files"
-
-# URL de la organización de Azure DevOps
-$organizationUrl    = "https://dev.azure.com/my-organization"
-
-# Nombres de las ramas
+# === RAMAS ===
 $branchDev          = "dev"
 $branchPre          = "pre"
 $branchMain         = "main"
 $branchMaster       = "refs/heads/master"
 
-# Variables de pipeline y despliegue
+# === VARIABLES DE COMPILACIÓN ===
 $artifactVariable   = '$(Build.DefinitionName)_$(Build.BuildNumber)'
 $envVarUsername     = '$(Deploy_Username)'
 $envVarPassword     = '$(Deploy_Password)'
+
+# === SONARQUBE ===
+$SonarToken         = "squ_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  # Token personal de SonarQube (tipo Bearer)
+$SonarUrl           = "https://sonarqube.miempresa.com"    # URL del servidor SonarQube
 
 # --- DESCARGA DEL REPOSITORIO DESDE TFS (si es necesario) ---
 $tfPath = "C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\TF.exe"
@@ -116,3 +106,36 @@ Set-BranchPolicies $branchDev
 az pipelines variable-group create --name "DeployCredentials" --variables Deploy_Username="domain\\deploy_user" Deploy_Password="P@ssword" --org $organizationUrl --project $projectName
 $varGroup = (az pipelines variable-group list --org $organizationUrl --project $projectName | ConvertFrom-Json) | Where-Object { $_.name -eq "DeployCredentials" }
 az pipelines variable-group variable create --group-id $varGroup.Id --name "Deploy_Password" --value "SuperSecret123" --org $organizationUrl --project $projectName
+
+# --- CREACIÓN DE PROYECTOS EN SONARQUBE ---
+Write-Host "`n==> Creando proyectos en SonarQube para $ProjectName..."
+
+# Autenticación
+$sonarHeader = @{ Authorization = "Bearer $SonarToken" }
+$createProjectEndpoint = "$SonarUrl/api/projects/create"
+$visibility = "private"
+
+# Nombres de los proyectos por entorno
+$sonarProjects = @(
+    @{ Suffix = "PRO"; Branch = "PRO" },
+    @{ Suffix = "PRE"; Branch = "PRE" },
+    @{ Suffix = "DEV"; Branch = "DEV" }
+)
+
+foreach ($proj in $sonarProjects) {
+    $projectKey = "$ProjectName.$($proj.Suffix)"
+
+    $body = @{
+        name       = $projectKey
+        project    = $projectKey
+        mainbranch = $proj.Branch
+        visibility = $visibility
+    }
+
+    try {
+        Invoke-RestMethod -Method Post -Uri $createProjectEndpoint -Headers $sonarHeader -Body $body
+        Write-Host "✔ Proyecto SonarQube creado: $projectKey"
+    } catch {
+        Write-Warning "⚠ No se pudo crear el proyecto '$projectKey' en SonarQube: $($_.Exception.Message)"
+    }
+}
