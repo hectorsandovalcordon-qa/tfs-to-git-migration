@@ -88,15 +88,15 @@ Si ya has configurado los valores por defecto dentro del script, simplemente eje
 | `-SonarUrl`            | URL base de tu servidor SonarQube                                              |
 
 
-### 4. Resultado esperado
+### 📊 Resultado esperado
 
-Después de ejecutar el script, tendrás:
+Después de ejecutar el script, obtendrás:
 
-- Un proyecto nuevo en Azure DevOps
-- Un repositorio Git inicializado con archivos base
-- Políticas de ramas configuradas
-- Un pipeline YAML listo para CI/CD
-- Todo ello ya *pusheado* y listo para trabajar 💼
+- Un **nuevo proyecto** creado en Azure DevOps.
+- Un **repositorio Git** inicializado con los archivos base (como `.gitignore`, `NuGet.Config`, etc.).
+- **Políticas de ramas** configuradas, como reglas de aprobación y estrategias de fusión.
+- Un **pipeline YAML** listo para CI/CD que puedes usar para automatizar la construcción y despliegue de tu aplicación.
+- Todo ello ya **pusheado** al repositorio en Azure DevOps, listo para comenzar a trabajar con tu equipo.
 
 ## 🛟 Soporte
 
