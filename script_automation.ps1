@@ -1,4 +1,4 @@
-# bootstrap-azure-devops.ps1
+# script_automation.ps1
 
 # --- CONFIGURACIÓN DE VARIABLES (defínelas antes de ejecutar el script) ---
 
