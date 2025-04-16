@@ -13,6 +13,24 @@ Este repositorio contiene un script de automatización en PowerShell para crear 
 - ⚙️ Generación de un pipeline inicial (`azure-pipelines.yml`)
 - 💾 Commit inicial + push automático
 
+## 📁 Estructura del repositorio
+
+```bash
+bootstrap-azure-devops/
+│
+├── bootstrap.ps1             # Script principal de automatización
+├── azure-pipelines.yml       # Pipeline base para CI/CD
+├── .gitignore                # Archivos que no se deben incluir en Git
+├── NuGet.Config              # Configuración para fuentes de paquetes NuGet
+├── README.md                 # Este archivo con documentación
+└── resources/                # Archivos auxiliares, plantillas y configuraciones adicionales
+    ├── branch-policies.json  # Políticas de rama para aplicar automáticamente
+    └── templates/            # Plantillas opcionales para pipelines, repos, etc.
+```
+
+> 💡 Puedes modificar esta estructura según las necesidades de tu organización.
+
+
 ## 🚦 Requisitos
 
 Antes de ejecutar el script, asegúrate de tener:
