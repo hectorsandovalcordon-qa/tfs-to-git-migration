@@ -12,6 +12,7 @@ Este repositorio contiene un script de automatización en PowerShell para crear 
 - 🔒 Aplicación de políticas de ramas (ej: PRs obligatorios en `main`)
 - ⚙️ Generación de un pipeline inicial (`azure-pipelines.yml`)
 - 💾 Commit inicial + push automático
+- 🧑‍💻 Creación de proyectos en SonarQube para los entornos configurados (por ejemplo, `PRO`, `PRE`, `DEV`), con las ramas correspondientes configuradas para análisis de calidad.
 
 ## 📁 Estructura del repositorio
 
