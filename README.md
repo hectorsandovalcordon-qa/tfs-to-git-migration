@@ -12,7 +12,6 @@ Este repositorio contiene un script de automatización en PowerShell para crear 
 - 🔒 Aplicación de políticas de ramas (ej: PRs obligatorios en `main`)
 - ⚙️ Generación de un pipeline inicial (`azure-pipelines.yml`)
 - 💾 Commit inicial + push automático
-- 🧑‍💻 Creación de proyectos en SonarQube para los entornos configurados (por ejemplo, `DEV`, `PRE`, `MAIN`), con las ramas correspondientes configuradas para análisis de calidad.
 
 ## 📁 Estructura del repositorio
 
@@ -39,7 +38,6 @@ Antes de ejecutar el script, asegúrate de tener:
 - PowerShell 7+
 - Acceso a Azure DevOps (con permisos para crear proyectos/repositorios)
 - Una **Personal Access Token (PAT)** válida para autenticarte
-- **Configuración de SonarQube** con el SonarQube token
 
 ## 🧪 Cómo usarlo
 
@@ -68,8 +66,6 @@ cd tfs-to-git-migration
     -TemplateFilesPath "C:\Plantillas" `
     -RepoFilesPath "C:\Projects\ERP\ERP.Web" `
     -OrganizationUrl "https://dev.azure.com/mi-org" `
-    -SonarToken "squ_abc123456789" `
-    -SonarUrl "https://sonarqube.miempresa.com"
 ```
 
 | Parámetro              | Descripción                                                                    |
@@ -80,8 +76,6 @@ cd tfs-to-git-migration
 | `-TemplateFilesPath`   | Ruta a los archivos base (`.gitignore`, `NuGet.Config`, `azure-pipelines.yml`) |
 | `-RepoFilesPath`       | Ruta donde están los archivos del nuevo repositorio                            |
 | `-OrganizationUrl`     | URL de tu organización en Azure DevOps (ejemplo: `https://dev.azure.com/acme`) |
-| `-SonarToken`          | Token de autenticación para SonarQube                                          |
-| `-SonarUrl`            | URL base de tu servidor SonarQube                                              |
 
 ## 📊 Resultado esperado
 
@@ -92,7 +86,6 @@ Después de ejecutar el script, obtendrás:
 - **Políticas de ramas** configuradas, como reglas de aprobación y estrategias de fusión.
 - Un **pipeline YAML** listo para CI/CD que puedes usar para automatizar la construcción y despliegue de tu aplicación.
 - Un **grupo de variables** en el pipeline configurado para las credenciales de despliegue.
-- **Proyectos en SonarQube** creados para los distintos entornos (`DEV`, `PRE`, `MAIN`), con las ramas correspondientes configuradas.
 - Todo ello ya **pusheado** al repositorio en Azure DevOps, listo para comenzar a trabajar con tu equipo.
 
 Esto crea una base sólida para tu proyecto, automatizando tanto la configuración del repositorio, las políticas de ramas, el pipeline de CI/CD y el análisis de calidad con SonarQube.
