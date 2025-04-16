@@ -50,7 +50,7 @@ cd tfs-to-git-migration
 
 ### 2. Ejecuta el script
 
-# ✅ Opción 1: Ejecutar con valores por defecto
+#### ✅ Opción 1: Ejecutar con valores por defecto
 
 ```powershell
 
@@ -59,7 +59,7 @@ Si ya has configurado los valores por defecto dentro del script, simplemente eje
 ./script_automation.ps1
 ```
 
-# 🛠️ Opción 2: Ejecutar pasando parámetros manualmente
+#### 🛠️ Opción 2: Ejecutar pasando parámetros manualmente
 
 ```powershell
 
