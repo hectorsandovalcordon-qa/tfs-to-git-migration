@@ -16,10 +16,7 @@ param (
 
     [string]$artifactVariable   = '$(Build.DefinitionName)_$(Build.BuildNumber)',
     [string]$envVarUsername     = '$(Deploy_Username)',
-    [string]$envVarPassword     = '$(Deploy_Password)',
-
-    [string]$SonarToken         = "squ_xxxxx",
-    [string]$SonarUrl           = "https://sonarqube.miempresa.com"
+    [string]$envVarPassword     = '$(Deploy_Password)'
 )
 
 # --- DESCARGA DEL REPOSITORIO DESDE TFS (si aplica) ---
@@ -99,33 +96,3 @@ Set-BranchPolicies $branchDev
 az pipelines variable-group create --name "DeployCredentials" --variables Deploy_Username="domain\\deploy_user" Deploy_Password="P@ssword" --org $organizationUrl --project $projectName
 $varGroup = (az pipelines variable-group list --org $organizationUrl --project $projectName | ConvertFrom-Json) | Where-Object { $_.name -eq "DeployCredentials" }
 az pipelines variable-group variable create --group-id $varGroup.Id --name "Deploy_Password" --value "SuperSecret123" --org $organizationUrl --project $projectName
-
-# --- CREACIÓN DE PROYECTOS EN SONARQUBE ---
-Write-Host "`n==> Creando proyectos en SonarQube para $ProjectName..."
-
-$sonarHeader = @{ Authorization = "Bearer $SonarToken" }
-$createProjectEndpoint = "$SonarUrl/api/projects/create"
-$visibility = "private"
-
-$sonarProjects = @(
-    @{ Suffix = "PRO"; Branch = "PRO" },
-    @{ Suffix = "PRE"; Branch = "PRE" },
-    @{ Suffix = "DEV"; Branch = "DEV" }
-)
-
-foreach ($proj in $sonarProjects) {
-    $projectKey = "$ProjectName.$($proj.Suffix)"
-    $body = @{
-        name       = $projectKey
-        project    = $projectKey
-        mainbranch = $proj.Branch
-        visibility = $visibility
-    }
-
-    try {
-        Invoke-RestMethod -Method Post -Uri $createProjectEndpoint -Headers $sonarHeader -Body $body
-        Write-Host "✔ Proyecto SonarQube creado: $projectKey"
-    } catch {
-        Write-Warning "⚠ No se pudo crear el proyecto '$projectKey' en SonarQube: $($_.Exception.Message)"
-    }
-}
