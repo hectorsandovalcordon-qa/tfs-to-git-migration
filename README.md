@@ -18,7 +18,7 @@ Este repositorio contiene un script de automatización en PowerShell para crear 
 ```bash
 bootstrap-azure-devops/
 │
-├── bootstrap.ps1             # Script principal de automatización
+├── script_automation.ps1     # Script principal de automatización
 ├── azure-pipelines.yml       # Pipeline base para CI/CD
 ├── .gitignore                # Archivos que no se deben incluir en Git
 ├── NuGet.Config              # Configuración para fuentes de paquetes NuGet
