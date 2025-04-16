@@ -57,7 +57,7 @@ Puedes usar parámetros interactivos o editar el script para usar valores por de
 O, si prefieres pasar los parámetros directamente:
 
 ```powershell
-./bootstrap.ps1 -Organization "https://dev.azure.com/mi-organizacion" `
+./script_automation.ps1 -Organization "https://dev.azure.com/mi-organizacion" `
                 -ProjectName "NuevoProyecto" `
                 -RepositoryName "mi-repo" `
                 -PersonalAccessToken "miPATseguro"
