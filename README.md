@@ -12,7 +12,7 @@ Este repositorio contiene un script de automatización en PowerShell para crear 
 - 🔒 Aplicación de políticas de ramas (ej: PRs obligatorios en `main`)
 - ⚙️ Generación de un pipeline inicial (`azure-pipelines.yml`)
 - 💾 Commit inicial + push automático
-- 🧑‍💻 Creación de proyectos en SonarQube para los entornos configurados (por ejemplo, `PRO`, `PRE`, `DEV`), con las ramas correspondientes configuradas para análisis de calidad.
+- 🧑‍💻 Creación de proyectos en SonarQube para los entornos configurados (por ejemplo, `DEV`, `PRE`, `MAIN`), con las ramas correspondientes configuradas para análisis de calidad.
 
 ## 📁 Estructura del repositorio
 
@@ -95,7 +95,7 @@ Después de ejecutar el script, obtendrás:
 - **Políticas de ramas** configuradas, como reglas de aprobación y estrategias de fusión.
 - Un **pipeline YAML** listo para CI/CD que puedes usar para automatizar la construcción y despliegue de tu aplicación.
 - Un **grupo de variables** en el pipeline configurado para las credenciales de despliegue.
-- **Proyectos en SonarQube** creados para los distintos entornos (`PRO`, `PRE`, `DEV`), con las ramas correspondientes configuradas.
+- **Proyectos en SonarQube** creados para los distintos entornos (`DEV`, `PRE`, `MAIN`), con las ramas correspondientes configuradas.
 - Todo ello ya **pusheado** al repositorio en Azure DevOps, listo para comenzar a trabajar con tu equipo.
 
 Esto crea una base sólida para tu proyecto, automatizando tanto la configuración del repositorio, las políticas de ramas, el pipeline de CI/CD y el análisis de calidad con SonarQube.
