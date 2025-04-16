@@ -43,24 +43,17 @@ Antes de ejecutar el script, asegúrate de tener:
 
 ### 1. Clona este repositorio
 
-```bash```
+```bash
 git clone https://github.com/tu-org/tfs-to-git-migration.git
 cd tfs-to-git-migration
-
-
-Puedes usar parámetros interactivos o editar el script para usar valores por defecto:
-
-```powershell
-./script_automation.ps1
 ```
 
-O, si prefieres pasar los parámetros directamente:
-
 ```powershell
-./script_automation.ps1 -Organization "https://dev.azure.com/mi-organizacion" `
-                -ProjectName "NuevoProyecto" `
-                -RepositoryName "mi-repo" `
-                -PersonalAccessToken "miPATseguro"
+
+Opción 1: Ejecutar con valores por defecto
+
+Si ya has configurado los valores por defecto dentro del script, simplemente ejecútalo así:
+./script_automation.ps1
 ```
 
 ### 3. Parámetros disponibles
