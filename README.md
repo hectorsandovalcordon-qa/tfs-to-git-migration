@@ -90,4 +90,4 @@ Este script está pensado como un punto de partida. Si necesitas soporte para co
 
 ## 📄 Licencia
 
-MIT © [Tu Nombre o Organización]
+MIT © Héctor Sandoval Cordón
