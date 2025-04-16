@@ -39,6 +39,7 @@ Antes de ejecutar el script, asegúrate de tener:
 - PowerShell 7+
 - Acceso a Azure DevOps (con permisos para crear proyectos/repositorios)
 - Una **Personal Access Token (PAT)** válida para autenticarte
+- **Configuración de SonarQube** con el SonarQube token
 
 ## 🧪 Cómo usarlo
 
