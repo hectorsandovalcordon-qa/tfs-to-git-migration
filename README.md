@@ -44,7 +44,7 @@ Antes de ejecutar el script, asegúrate de tener:
 ### 1. Clona este repositorio
 
 ```bash```
-git clone https://github.com/tu-org/bootstrap-azure-devops.git
+git clone https://github.com/tu-org/tfs-to-git-migration.git
 cd bootstrap-azure-devops
 
 
