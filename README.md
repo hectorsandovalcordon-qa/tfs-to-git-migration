@@ -45,7 +45,7 @@ Antes de ejecutar el script, asegúrate de tener:
 
 ```bash```
 git clone https://github.com/tu-org/tfs-to-git-migration.git
-cd bootstrap-azure-devops
+cd tfs-to-git-migration
 
 
 Puedes usar parámetros interactivos o editar el script para usar valores por defecto:
