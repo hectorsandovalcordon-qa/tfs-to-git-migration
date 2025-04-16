@@ -74,16 +74,19 @@ Si ya has configurado los valores por defecto dentro del script, simplemente eje
     -SonarUrl "https://sonarqube.miempresa.com"
 ```
 
-### 3. Parámetros disponibles
+### ⚙️ Parámetros disponibles
 
-| Parámetro              | Descripción                                                                 |
-|------------------------|-----------------------------------------------------------------------------|
-| `-Organization`        | URL de tu organización en Azure DevOps (ej: `https://dev.azure.com/acme`)  |
-| `-ProjectName`         | Nombre del nuevo proyecto a crear                                           |
-| `-RepositoryName`      | Nombre del repositorio principal                                            |
-| `-PersonalAccessToken` | Tu Personal Access Token para autenticarte en Azure DevOps                  |
-| `-Visibility`          | (Opcional) Privacidad del proyecto: `private` o `public`                    |
-| `-DefaultBranch`       | (Opcional) Rama principal (por defecto: `main`)                             |
+| Parámetro              | Descripción                                                                    |
+|------------------------|--------------------------------------------------------------------------------|
+| `-ProjectName`         | Nombre del nuevo proyecto en Azure DevOps                                      |
+| `-SourceRepoName`      | Nombre del repositorio original (por ejemplo, en TFS)                          |
+| `-SolutionFile`        | Archivo `.sln` principal del proyecto                                          |
+| `-TemplateFilesPath`   | Ruta a los archivos base (`.gitignore`, `NuGet.Config`, `azure-pipelines.yml`) |
+| `-RepoFilesPath`       | Ruta donde están los archivos del nuevo repositorio                            |
+| `-OrganizationUrl`     | URL de tu organización en Azure DevOps (ejemplo: `https://dev.azure.com/acme`) |
+| `-SonarToken`          | Token de autenticación para SonarQube                                          |
+| `-SonarUrl`            | URL base de tu servidor SonarQube                                              |
+
 
 ### 4. Resultado esperado
 
