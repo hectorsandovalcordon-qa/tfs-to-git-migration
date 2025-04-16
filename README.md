@@ -48,12 +48,30 @@ git clone https://github.com/tu-org/tfs-to-git-migration.git
 cd tfs-to-git-migration
 ```
 
+### 2. Ejecuta el script
+
 ```powershell
 
-Opción 1: Ejecutar con valores por defecto
+✅ Opción 1: Ejecutar con valores por defecto
 
 Si ya has configurado los valores por defecto dentro del script, simplemente ejecútalo así:
+
 ./script_automation.ps1
+```
+
+```powershell
+
+🛠️ Opción 2: Ejecutar pasando parámetros manualmente
+
+./script_automation.ps1 `
+    -ProjectName "ERP" `
+    -SourceRepoName "ERP.Web.OLD" `
+    -SolutionFile "ERP.sln" `
+    -TemplateFilesPath "C:\Plantillas" `
+    -RepoFilesPath "C:\Projects\ERP\ERP.Web" `
+    -OrganizationUrl "https://dev.azure.com/mi-org" `
+    -SonarToken "squ_abc123456789" `
+    -SonarUrl "https://sonarqube.miempresa.com"
 ```
 
 ### 3. Parámetros disponibles
