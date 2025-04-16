@@ -4,7 +4,7 @@ Este repositorio contiene un script de automatización en PowerShell para crear 
 
 ## 🧰 ¿Qué hace este script?
 
-`bootstrap.ps1` automatiza la configuración inicial de un proyecto en Azure DevOps. Incluye:
+`script_automation.ps1` automatiza la configuración inicial de un proyecto en Azure DevOps. Incluye:
 
 - 🔨 Creación del proyecto en Azure DevOps
 - 📦 Configuración del repositorio principal
