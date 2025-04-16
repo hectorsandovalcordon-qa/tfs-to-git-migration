@@ -50,18 +50,18 @@ cd tfs-to-git-migration
 
 ### 2. Ejecuta el script
 
-```powershell
+# ✅ Opción 1: Ejecutar con valores por defecto
 
-✅ Opción 1: Ejecutar con valores por defecto
+```powershell
 
 Si ya has configurado los valores por defecto dentro del script, simplemente ejecútalo así:
 
 ./script_automation.ps1
 ```
 
-```powershell
+# 🛠️ Opción 2: Ejecutar pasando parámetros manualmente
 
-🛠️ Opción 2: Ejecutar pasando parámetros manualmente
+```powershell
 
 ./script_automation.ps1 `
     -ProjectName "ERP" `
