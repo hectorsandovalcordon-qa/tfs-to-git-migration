@@ -1,0 +1,73 @@
+trigger: none
+
+name: $(Build.DefinitionName)_$(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r)
+
+jobs:
+- job: Phase_1
+  displayName: Commit Stage
+  cancelTimeoutInMinutes: 1
+  pool:
+    name: "Default"
+  steps:
+  - powershell: |
+      $envName = "$(Build.SourceBranchName)"
+      echo "Current Branch: $envName"
+      
+      if ($envName -eq "merge") {
+          $envPath = "$(System.PullRequest.TargetBranch)".split('/')[-1].ToUpper()
+      } elseif ($envName -eq "main") {
+          $envPath = "PRO"
+      } elseif ($envName -eq "pre") {
+          $envPath = "PRE"
+      } else {
+          $envPath = "DEV"
+      }
+      
+      Write-Host "##vso[task.setvariable variable=envPath;]$envPath"
+      echo "Environment Path: $envPath"
+    displayName: 'Set Env Path'
+    
+  - checkout: self
+    persistCredentials: true
+    
+  - task: VariableSetTask@3
+    inputs:
+      variableName: 'configuration'
+      value: '$(Config$(envPath))'
+      IsOutput: true
+  
+  - task: SonarSource.sonarqube.15B84CA1-B62F-4A2A-A403-89B77A063157.SonarQubePrepare@5
+    displayName: 'Prepare analysis on SonarQube'
+    inputs:
+      SonarQube: '$(SonarQubeServiceConnection)'
+      projectKey: '$(ProjectName)_$(envPath)'
+      projectName: '$(ProjectName)_$(envPath)'
+      projectVersion: '$(Build.DefinitionName)_$(Build.BuildNumber)'
+      extraProperties: |
+        sonar.exclusions=**/*.cshtml, **/*.js, **/*.css, **/*.xml, **/*.xsd, **/*.html, **/*.aspx
+        sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/TestResults/Coverage/*.opencover.xml
+        sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/TestResults/*.trx
+        sonar.qualitygate.wait=true
+        sonar.qualitygate.timeout=300
+    enabled: false
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet Restore'
+    inputs:
+      selectOrConfig: config
+      nugetConfigPath: 'NuGet.Config'
+
+  - task: MSBuild@1
+    displayName: 'Build Solution'
+    inputs:
+      solution: '$(Build.SourcesDirectory)/$(SolutionFile)'
+      configuration: 'Release'
+      msbuildArguments: '/m /p:DeployOnBuild=True /p:GenerateProjectSpecificOutputFolder=True /p:OutDir=$(Build.ArtifactStagingDirectory) /p:PrecompileBeforePublish=True /p:EnableUpdateable=False'
+      createLogFile: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact'
+    inputs:
+      ArtifactName: '$(Build.DefinitionName)_$(Build.BuildNumber)'
+      publishLocation: FilePath
+      TargetPath: '$(Build.ArtifactStagingDirectory)/$(envPath)'
