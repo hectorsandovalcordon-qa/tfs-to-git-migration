@@ -87,7 +87,6 @@ Si ya has configurado los valores por defecto dentro del script, simplemente eje
 | `-SonarToken`          | Token de autenticación para SonarQube                                          |
 | `-SonarUrl`            | URL base de tu servidor SonarQube                                              |
 
-
 ## 📊 Resultado esperado
 
 Después de ejecutar el script, obtendrás:
@@ -96,4 +95,10 @@ Después de ejecutar el script, obtendrás:
 - Un **repositorio Git** inicializado con los archivos base (como `.gitignore`, `NuGet.Config`, etc.).
 - **Políticas de ramas** configuradas, como reglas de aprobación y estrategias de fusión.
 - Un **pipeline YAML** listo para CI/CD que puedes usar para automatizar la construcción y despliegue de tu aplicación.
+- Un **grupo de variables** en el pipeline configurado para las credenciales de despliegue.
+- **Proyectos en SonarQube** creados para los distintos entornos (`PRO`, `PRE`, `DEV`), con las ramas correspondientes configuradas.
 - Todo ello ya **pusheado** al repositorio en Azure DevOps, listo para comenzar a trabajar con tu equipo.
+
+Esto crea una base sólida para tu proyecto, automatizando tanto la configuración del repositorio, las políticas de ramas, el pipeline de CI/CD y el análisis de calidad con SonarQube.
+
+
