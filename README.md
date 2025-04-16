@@ -23,8 +23,16 @@ Antes de ejecutar el script, asegúrate de tener:
 
 ## 🧪 Cómo usarlo
 
-1. Clona este repositorio:
-   ```bash
-   git clone https://github.com/tu-org/bootstrap-azure-devops.git
-   cd bootstrap-azure-devops
+### 1. Clona este repositorio
+
+```bash
+git clone https://github.com/tu-org/bootstrap-azure-devops.git
+cd bootstrap-azure-devops
+
+### 2. Ejecuta el script
+
+Puedes usar parámetros interactivos o editar el script para usar valores por defecto:
+
+```powershell
+./bootstrap.ps1
 
