@@ -74,7 +74,7 @@ Si ya has configurado los valores por defecto dentro del script, simplemente eje
     -SonarUrl "https://sonarqube.miempresa.com"
 ```
 
-### ⚙️ Parámetros disponibles
+#### Parámetros disponibles
 
 | Parámetro              | Descripción                                                                    |
 |------------------------|--------------------------------------------------------------------------------|
@@ -88,7 +88,7 @@ Si ya has configurado los valores por defecto dentro del script, simplemente eje
 | `-SonarUrl`            | URL base de tu servidor SonarQube                                              |
 
 
-### 📊 Resultado esperado
+## 📊 Resultado esperado
 
 Después de ejecutar el script, obtendrás:
 
@@ -97,11 +97,3 @@ Después de ejecutar el script, obtendrás:
 - **Políticas de ramas** configuradas, como reglas de aprobación y estrategias de fusión.
 - Un **pipeline YAML** listo para CI/CD que puedes usar para automatizar la construcción y despliegue de tu aplicación.
 - Todo ello ya **pusheado** al repositorio en Azure DevOps, listo para comenzar a trabajar con tu equipo.
-
-## 🛟 Soporte
-
-Este script está pensado como un punto de partida. Si necesitas soporte para configuraciones más avanzadas (múltiples repos, plantillas de pipelines, etc.), siéntete libre de abrir un *issue* o hacer un *fork*.
-
-## 📄 Licencia
-
-MIT © Héctor Sandoval Cordón
