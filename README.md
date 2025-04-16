@@ -51,7 +51,7 @@ cd bootstrap-azure-devops
 Puedes usar parámetros interactivos o editar el script para usar valores por defecto:
 
 ```powershell
-./bootstrap.ps1
+./script_automation.ps1
 ```
 
 O, si prefieres pasar los parámetros directamente:
